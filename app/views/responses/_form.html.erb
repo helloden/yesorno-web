@@ -1,0 +1,19 @@
+<%= form_for(@response) do |f| %>
+  <% if @response.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@response.errors.count, "error") %> prohibited this response from being saved:</h2>
+
+      <ul>
+      <% @response.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= f.radio_button :is_yes, true %> Yes
+    <%= f.radio_button :is_yes, false %> False
+    <%= f.submit %>
+  </div>
+<% end %>
