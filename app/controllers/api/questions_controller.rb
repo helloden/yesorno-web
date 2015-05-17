@@ -5,6 +5,14 @@ module Api
 			render json: { results: Question.all }
 		end
 
+		def my_questions
+			results = {results:[]}
+			if user_signed_in?
+				results[:results] = Question.where(user_id: current_user.id)
+			end
+			render json: results
+		end
+
 		def show
 			question = Question.where(id: params[:id])
 			responses = Response.where(id: params[:id])
