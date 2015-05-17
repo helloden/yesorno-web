@@ -2,5 +2,18 @@
 
 ID: <%= @question.id %><br/>
 CONTENT: <%= @question.content %><br/>
+USER WHO ASKED IT: <%= @question.owner.email %><br/>
+
+<b>RESPONSES:</b><br/>
+<ul>
+	<% @responses.each do |r|  %>
+		<li>
+		<%= r.user.id %> <%= r.user.email %>: <%= r.is_yes %>
+		</li>
+	<% end %>
+</ul>
+<br/><br/>
 <%= link_to 'Edit', edit_question_path(@question) %> |
 <%= link_to 'Back', questions_path %>
+
+

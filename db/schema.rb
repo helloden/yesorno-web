@@ -11,22 +11,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150516230259) do
+ActiveRecord::Schema.define(version: 20150517031503) do
 
   create_table "questions", force: :cascade do |t|
     t.text     "content"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "user_id"
   end
+
+  add_index "questions", ["user_id"], name: "index_questions_on_user_id"
 
   create_table "responses", force: :cascade do |t|
     t.boolean  "is_yes"
     t.integer  "question_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.integer  "user_id"
   end
 
   add_index "responses", ["question_id"], name: "index_responses_on_question_id"
+  add_index "responses", ["user_id"], name: "index_responses_on_user_id"
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false

@@ -10,6 +10,7 @@ class QuestionsController < ApplicationController
   # GET /questions/1
   # GET /questions/1.json
   def show
+    @responses = Response.where(question_id: params[:id])
   end
 
   # GET /questions/new
@@ -25,6 +26,9 @@ class QuestionsController < ApplicationController
   # POST /questions.json
   def create
     @question = Question.new(question_params)
+    if user_signed_in?
+      @question.owner = current_user
+    end
 
     respond_to do |format|
       if @question.save
