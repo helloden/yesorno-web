@@ -13,15 +13,27 @@ module Api
 
 		def create
 			question = Question.new(question_params)
+			result = { status: "failed" }
+
 			if user_signed_in?
       	question.owner = current_user
     	end
-			if question.save
-				render json: question, status: :created
-			else
-				render json: { errors: question.errors.full_messages}, status: :unprocessable_entity
-			end
-		end
+
+    	begin
+	      image = parse_image_data(params[:question][:question_image]) if params[:question][:question_image]
+	      question.question_image = image
+
+	      if question.save
+	        result[:status] = "success"
+	      end
+	    rescue Exception => e
+	      Rails.logger.error "#{e.message}"
+	    end
+
+	    render json: result.to_json
+	  ensure
+	    clean_tempfile
+	  end
 
 		def upload_image
 			result = { status: "failed" }
