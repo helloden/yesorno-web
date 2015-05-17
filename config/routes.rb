@@ -1,7 +1,11 @@
 Rails.application.routes.draw do
-  devise_for :users, controllers: { sessions: "users/sessions" }
+
+  devise_for :users, :skip => [:sessions, :registrations, :passwords]
   devise_scope :user do
-    get "users/sign_out", to: "devise/sessions#destroy"
+    post 'login' => 'sessions#create', :as => :login
+    delete 'logout' => 'sessions#destroy', :as => :logout
+    post 'register' => 'registrations#create', :as => :register
+    delete 'delete_account' => 'registrations#destroy', :as => :delete_account
   end
 
   resources :questions do
@@ -14,12 +18,13 @@ Rails.application.routes.draw do
   root 'welcome#index'
 
   namespace :api, defaults: {format: :json} do
-    devise_for :users
+    devise_for :users, :skip => [:sessions, :registrations, :passwords]
     resources :questions do
       resources :responses
     end
     devise_scope :user do
-      post "/register", :to => 'registrations#create'
+      post 'login' => 'sessions#create', as: :login
+      post "register", :to => 'registrations#create', as: :register
       delete "/logout", :to => 'session#destroy'
     end
   end

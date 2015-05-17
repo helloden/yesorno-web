@@ -34,6 +34,8 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'kaminari' # adds pagination to ActiveModels
 gem 'devise'
+gem 'simple_token_authentication', '~> 1.0'
+gem 'mongoid'
 
 group :development, :test do
   # Call 'debugger' anywhere in the code to stop execution and get a debugger console

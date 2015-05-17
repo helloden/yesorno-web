@@ -1,26 +1,26 @@
 module Api
 	class SessionsController < Devise::SessionsController
-		protect_from_forgery with: :null_session, :if => Proc.new { |c| c.request.format == 'application/json' }
-		skip_before_filter :verify_authenticity_token, :if => Proc.new { |c| c.request.format == 'application/json' }
+		skip_before_filter :verify_authenticity_token, if: :json_request?
 
-		before_filter :validate_auth_token, :except => :create
-		include Devise::Controllers::Helpers
-	  include ApiHelper
+	  acts_as_token_authentication_handler_for User
+
+	  skip_before_filter :authenticate_entity_from_token!
+	  skip_before_filter :authenticate_entity!
+	  before_filter :authenticate_entity_from_token!, :only => [:destroy]
+	  before_filter :authenticate_entity!, :only => [:destroy]
+
 
 	  def create
-	    resource = User.find_for_database_authentication(:email => params[:user][:email])
-	    return failure unless resource
-
-	    if resource.valid_password?(params[:user][:password])
-	      sign_in(:user, resource)
-
-	      resource.ensure_authentication_token!
-	      render :json=> {:success => true, :token => resource.authentication_token}
-	      return
-	    end
-	    failure
+	    warden.authenticate!(:scope => resource_name)
+	    @user = current_user
+	    render json: { message: 'Logged in', auth_token: @user.authentication_token}, status: :HTTP_OK
 	  end
 
+	  private
+
+	  def json_request?
+	    request.format.json?
+	  end
 
 	end
 end

@@ -12,24 +12,27 @@ module Api
 	      	render json: resource, status: :created
 
 	      else
-	        expire_data_after_sign_in!
+	        # expire_data_after_sign_in!
 	        render json: resource, status: :created
 	      end
 	    else
 	      clean_up_passwords resource
 	      # set_minimum_password_length
+	      logger.debug "Errors: "
+	      logger.debug resource.errors.full_messages
 	      render json: { errors: resource.errors.full_messages} , status: :unprocessable_entity
 	    end
 		end
 
-		protected
+		private
 
-			def build_resource(hash=nil)
-		    self.resource = resource_class.new_with_session(hash || {}, session)
-		  end
+	  def sign_up_params
+	    devise_parameter_sanitizer.sanitize(:sign_up)
+	  end
 
-			def sign_up_params
-		    devise_parameter_sanitizer.sanitize(:sign_up)
-		  end
+	  def json_request?
+	    request.format.json?
+	  end
+
 	end
 end
