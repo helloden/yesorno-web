@@ -1,5 +1,14 @@
 # yesorno-web
 
+## Misc
+
+#####  Post Headers
+
+`Content-Type: application/x-www-form-urlencoded`
+
+#####  Auth Token
+
+`?user_token='<token>'`
 ## Authentication
 
 `POST /api/register` will register a new user with the following: 
