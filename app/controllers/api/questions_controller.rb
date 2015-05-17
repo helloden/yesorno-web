@@ -54,7 +54,6 @@ module Api
 	    clean_tempfile
 	  end
 
-	# This part is actually taken from http://blag.7tonlnu.pl/blog/2014/01/22/uploading-images-to-a-rails-app-via-json-api. I tweaked it a bit by manually setting the tempfile's content type because somehow putting it in a hash during initialization didn't work for me.
   def parse_image_data(image_data)
     @tempfile = Tempfile.new('question_question_image')
     @tempfile.binmode
