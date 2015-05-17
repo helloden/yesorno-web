@@ -26,9 +26,9 @@ module Api
 		def upload_image
 			result = { status: "failed" }
 			begin
-	      question_params[:image] = parse_image_data(question_params[:image]) if question_params[:image]
+	      question_params[:question_image] = parse_image_data(question_params[:question_image]) if question_params[:question_image]
 	      question = Question.find(params[:question_id])
-	      question.question_image = question_params[:image]
+	      question.question_image = question_params[:question_image]
 
 	      if question.save
 	        result[:status] = "success"
@@ -67,7 +67,8 @@ module Api
 
 		private
 			def question_params
-      	params.require(:question).permit(:content, :image)
+      	# params.require(:question).permit(:content)
+      	params.require(:question)
     	end
 	end
 end
