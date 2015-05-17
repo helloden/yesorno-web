@@ -21,6 +21,7 @@ Rails.application.routes.draw do
     devise_for :users, :skip => [:sessions, :registrations, :passwords]
     resources :questions do
       post 'upload' => 'questions#upload_image'
+      get 'statistics' => 'responses#statistics'
       resources :responses
     end
     devise_for :users, :skip => [:sessions, :registrations, :passwords]

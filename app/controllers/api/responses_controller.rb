@@ -17,6 +17,12 @@ module Api
 			end
 		end
 
+		def statistics
+			num_yes = Response.where(question_id: params[:question_id], is_yes: true).count
+			num_no = Response.where(question_id: params[:question_id], is_yes: false).count
+			render json: { yes: num_yes, no: num_no }
+		end
+
 		private
 			def response_params
       	params.require(:response).permit(:is_yes)
