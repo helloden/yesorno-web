@@ -14,7 +14,7 @@ module Api
 		def create
 			question = Question.new(question_params)
 			if user_signed_in?
-      	@question.owner = current_user
+      	question.owner = current_user
     	end
 			if question.save
 				render json: question, status: :created

@@ -8,7 +8,7 @@ class Question < ActiveRecord::Base
 
 	def serializable_hash(options = nil)
 	  options ||= {}
-	  question = {content: content, id: id, created_at: created_at, updated_at: updated_at}
+	  question = {id: id, content: content}
 	  question[:user] = self.owner
 	  question[:responses] = self.responses
 	  question

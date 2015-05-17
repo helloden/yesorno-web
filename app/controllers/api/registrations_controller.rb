@@ -9,7 +9,9 @@ module Api
 	    if resource.persisted?
 	      if resource.active_for_authentication?
 	        sign_up(resource_name, resource)
-	      	render json: resource, status: :created
+	      	warden.authenticate!(:scope => resource_name)
+			    @user = current_user
+			    render json: { message: 'Logged in', auth_token: @user.authentication_token}, status: :created
 
 	      else
 	        # expire_data_after_sign_in!

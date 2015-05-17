@@ -13,7 +13,7 @@ class User < ActiveRecord::Base
 
 	def serializable_hash(options = nil)
 	  options ||= {}
-		user = {id: id, email: email}
+		user = {id: id, username: username}
 	end
 
 end
