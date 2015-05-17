@@ -12,8 +12,8 @@ class Question < ActiveRecord::Base
 	  options ||= {}
 	  question = {id: id, content: content}
 	  question[:user] = self.owner
+	  question[:question_image] = self.question_image
 	  question[:responses] = self.responses
-	  question[:question_image] = self.question_image.url
 	  question
 	end
 

@@ -1,11 +1,6 @@
 Rails.application.routes.draw do
 
-  devise_for :users, :skip => [:sessions, :registrations, :passwords]
-  devise_scope :user do
-    post 'login' => 'sessions#create', :as => :login
-    delete 'logout' => 'sessions#destroy', :as => :logout
-    post 'register' => 'registrations#create', :as => :register
-  end
+  devise_for :users
 
   resources :questions do
     resources :responses

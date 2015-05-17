@@ -38,7 +38,7 @@ module Api
 	      Rails.logger.error "#{e.message}"
 	    end
 
-	    render json: result.to_json
+	    render json: result.to_json, status: :created
 	  ensure
 	    clean_tempfile
 	  end
