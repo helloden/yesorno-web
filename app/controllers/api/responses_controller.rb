@@ -3,7 +3,7 @@ module Api
 
 		def index
 			responses = Response.where(question_id: params[:question_id])
-			render json: responses
+			render json: { results: responses }
 		end
 
 		def create
