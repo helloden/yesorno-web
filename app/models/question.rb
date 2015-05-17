@@ -6,4 +6,12 @@ class Question < ActiveRecord::Base
 	validates :content, presence: true
 	# validates :owner, presence: true
 
+	def serializable_hash(options = nil)
+	  options ||= {}
+	  question = {content: content, id: id, created_at: created_at, updated_at: updated_at}
+	  question[:user] = self.owner
+	  question[:responses] = self.responses
+	  question
+	end
+
 end

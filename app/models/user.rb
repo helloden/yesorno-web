@@ -9,4 +9,11 @@ class User < ActiveRecord::Base
 
 	acts_as_token_authenticatable
 
+	validates :username, presence: true, uniqueness: true
+
+	def serializable_hash(options = nil)
+	  options ||= {}
+		user = {id: id, email: email}
+	end
+
 end

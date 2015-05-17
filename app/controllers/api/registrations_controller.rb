@@ -27,7 +27,7 @@ module Api
 		private
 
 	  def sign_up_params
-	    devise_parameter_sanitizer.sanitize(:sign_up)
+	    params.require(:user).permit(:email, :password, :password_confirmation, :username)
 	  end
 
 	  def json_request?

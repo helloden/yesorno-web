@@ -1,6 +1,5 @@
 module Api
 	class QuestionsController < BaseApiController
-		before_filter :authenticate_user!
 
 		def index
 			render json: Question.all
@@ -9,7 +8,7 @@ module Api
 		def show
 			question = Question.where(id: params[:id])
 			responses = Response.where(id: params[:id])
-			render json: question.as_json(include:[:responses])
+			render json: question
 		end
 
 		def create
@@ -22,10 +21,6 @@ module Api
 			else
 				render json: { errors: question.errors.full_messages}, status: :unprocessable_entity
 			end
-		end
-
-		def respond
-
 		end
 
 		private

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150517051154) do
+ActiveRecord::Schema.define(version: 20150517072443) do
 
   create_table "questions", force: :cascade do |t|
     t.text     "content"
@@ -47,6 +47,7 @@ ActiveRecord::Schema.define(version: 20150517051154) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "authentication_token"
+    t.string   "username",               default: "", null: false
   end
 
   add_index "users", ["authentication_token"], name: "index_users_on_authentication_token"
