@@ -5,12 +5,12 @@ Rails.application.routes.draw do
     post 'login' => 'sessions#create', :as => :login
     delete 'logout' => 'sessions#destroy', :as => :logout
     post 'register' => 'registrations#create', :as => :register
-    delete 'delete_account' => 'registrations#destroy', :as => :delete_account
   end
 
   resources :questions do
     resources :responses
   end
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
@@ -22,10 +22,11 @@ Rails.application.routes.draw do
     resources :questions do
       resources :responses
     end
+    devise_for :users, :skip => [:sessions, :registrations, :passwords]
     devise_scope :user do
-      post 'login' => 'sessions#create', as: :login
-      post "register", :to => 'registrations#create', as: :register
-      delete "/logout", :to => 'session#destroy'
+      post 'login' => 'sessions#create', :as => :login
+      delete 'logout' => 'sessions#destroy', :as => :logout
+      post 'register' => 'registrations#create', :as => :register
     end
   end
 

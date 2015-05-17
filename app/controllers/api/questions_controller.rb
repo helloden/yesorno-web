@@ -1,5 +1,6 @@
 module Api
 	class QuestionsController < BaseApiController
+		before_filter :authenticate_user!
 
 		def index
 			render json: Question.all
