@@ -36,6 +36,9 @@ gem 'kaminari' # adds pagination to ActiveModels
 gem 'devise'
 gem 'simple_token_authentication', '~> 1.0'
 
+# Image Uploading
+gem "paperclip", "~> 3.1"
+
 group :development, :test do
   # Call 'debugger' anywhere in the code to stop execution and get a debugger console
   gem 'debugger'

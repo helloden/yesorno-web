@@ -20,6 +20,7 @@ Rails.application.routes.draw do
   namespace :api, defaults: {format: :json} do
     devise_for :users, :skip => [:sessions, :registrations, :passwords]
     resources :questions do
+      post 'upload' => 'questions#upload_image'
       resources :responses
     end
     devise_for :users, :skip => [:sessions, :registrations, :passwords]
