@@ -3,12 +3,7 @@ class Question < ActiveRecord::Base
 
 	has_many :responses
 
-	has_attached_file :question_image , :styles => { :medium => "300x300>", :thumb => "100x100>"},
-                    :url => "/images/:attachment/:id_:style.:extension",
-                    :path => ":rails_root/public/images/:attachment/:id_:style.:extension"
-                   # :default_url => "/images/Default_profile_picture.png"
-
-	attr_accessor :question_image_file_name, :question_image_content, :question_image_content_type
+	has_attached_file :question_image , :styles => { :medium => "300x300>", :thumb => "100x100>"}
 
 	validates :content, presence: true
 	# validates :owner, presence: true
@@ -18,6 +13,7 @@ class Question < ActiveRecord::Base
 	  question = {id: id, content: content}
 	  question[:user] = self.owner
 	  question[:responses] = self.responses
+	  question[:question_image] = self.question_image.url
 	  question
 	end
 

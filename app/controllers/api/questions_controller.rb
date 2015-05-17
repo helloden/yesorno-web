@@ -26,9 +26,9 @@ module Api
 		def upload_image
 			result = { status: "failed" }
 			begin
-	      question_params[:question_image] = parse_image_data(question_params[:question_image]) if question_params[:question_image]
+	      image = parse_image_data(params[:question][:question_image]) if params[:question][:question_image]
 	      question = Question.find(params[:question_id])
-	      question.question_image = question_params[:question_image]
+	      question.question_image = image
 
 	      if question.save
 	        result[:status] = "success"
@@ -43,32 +43,31 @@ module Api
 	  end
 
 	# This part is actually taken from http://blag.7tonlnu.pl/blog/2014/01/22/uploading-images-to-a-rails-app-via-json-api. I tweaked it a bit by manually setting the tempfile's content type because somehow putting it in a hash during initialization didn't work for me.
-	  def parse_image_data(image_data)
-	    @tempfile = Tempfile.new('question_image')
-	    @tempfile.binmode
-	    @tempfile.write Base64.decode64(image_data[:content])
-	    @tempfile.rewind
+  def parse_image_data(image_data)
+    @tempfile = Tempfile.new('question_question_image')
+    @tempfile.binmode
+    @tempfile.write Base64.decode64(image_data[:content])
+    @tempfile.rewind
 
-	    uploaded_file = ActionDispatch::Http::UploadedFile.new(
-	      tempfile: @tempfile,
-	      filename: image_data[:filename]
-	    )
+    uploaded_file = ActionDispatch::Http::UploadedFile.new(
+      tempfile: @tempfile,
+      filename: image_data[:filename]
+    )
 
-	   uploaded_file.content_type = image_data[:content_type]
-	    uploaded_file
-	  end
+   uploaded_file.content_type = image_data[:content_type]
+    uploaded_file
+  end
 
-	  def clean_tempfile
-	    if @tempfile
-	      @tempfile.close
-	      @tempfile.unlink
-	    end
-	  end
+  def clean_tempfile
+    if @tempfile
+      @tempfile.close
+      @tempfile.unlink
+    end
+  end
 
 		private
 			def question_params
-      	# params.require(:question).permit(:content)
-      	params.require(:question)
+      	params.require(:question).permit(:content)
     	end
 	end
 end

@@ -15,10 +15,13 @@ ActiveRecord::Schema.define(version: 20150517083346) do
 
   create_table "questions", force: :cascade do |t|
     t.text     "content"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
     t.integer  "user_id"
-    t.string   "question_image"
+    t.string   "question_image_file_name"
+    t.string   "question_image_content_type"
+    t.integer  "question_image_file_size"
+    t.datetime "question_image_updated_at"
   end
 
   add_index "questions", ["user_id"], name: "index_questions_on_user_id"
