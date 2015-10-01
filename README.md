@@ -1,5 +1,7 @@
 # yesorno-web
 
+API for yes/no app built for hackathon. 
+
 ## Misc
 
 #####  Post Headers
